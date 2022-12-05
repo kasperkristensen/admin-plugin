@@ -1,11 +1,16 @@
 {
   "compilerOptions": {
-    "composite": true,
-    "module": "ESNext",
-    "moduleResolution": "Node",
-    "allowSyntheticDefaultImports": true,
+    "declaration": true,
+    "declarationMap": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "module": "commonjs",
+    "noEmit": false,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
     "outDir": ".",
-    "rootDir": "./src"
+    "rootDir": "src",
+    "baseUrl": "./"
   },
   "include": ["vite.config.ts", "src"],
   "exclude": ["src/client"]

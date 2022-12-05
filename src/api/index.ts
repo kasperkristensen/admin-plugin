@@ -7,18 +7,14 @@ import { PluginOptions } from "../types";
 export default function (rootDirectory: string, pluginOptions: PluginOptions) {
   const app = Router();
 
-  const appPath = path.resolve(__dirname, "..", "..", "build", "index.html");
+  const appPath = path.resolve(__dirname, "..", "build", "index.html");
 
   const html = fse.readFileSync(appPath, "utf8");
-  // const htmlWithBase = html.replace(
-  //   /<base \/>/,
-  //   `<base href="${appURL.toString({ rootRelative: true })}/" />`
-  // );
 
   const sendHtml = (_req: Request, res: Response) => {
     res.setHeader("Cache-Control", "no-cache");
     res.setHeader("Vary", "Origin, Cache-Control");
-    res.send("OK");
+    res.send(html);
   };
 
   const setStaticHeaders = (res: ServerResponse) => {

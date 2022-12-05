@@ -9,6 +9,5 @@ node_modules
 /cli
 /utils
 /scripts
-types.js
-types.d.ts
+/types.*
 
