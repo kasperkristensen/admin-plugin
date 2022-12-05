@@ -1,0 +1,14 @@
+dist
+node_modules
+
+.DS_Store
+*.tsbuildinfo
+
+/api
+/build
+/cli
+/utils
+/scripts
+types.js
+types.d.ts
+
