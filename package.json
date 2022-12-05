@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "main": "index.js",
   "license": "MIT",
+  "types": "types.d.ts",
   "scripts": {
     "build:admin": "tsc -p ./tsconfig.react.json && ts-node ./src/scripts/build.ts",
     "build:lib": "tsc -p ./tsconfig.node.json",
@@ -10,10 +11,10 @@
     "dev:client": "vite ./src/client"
   },
   "bin": {
-    "medusa-admin": "dist/cli/index.js"
+    "medusa-admin-cli": "cli/index.js"
   },
   "peerDependencies": {
-    "medusa-core-utils": "^1.1.35"
+    "medusa-core-utils": "^1.x"
   },
   "devDependencies": {
     "@types/express": "^4.17.14",

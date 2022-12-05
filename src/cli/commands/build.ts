@@ -11,8 +11,8 @@ type Options = {
 export async function build({ outDir, watch = false }: Options): Promise<void> {
   const { pluginOptions, configFilePath } = loadConfig();
 
-  const root = resolve(__dirname, "../", "client");
-  const buildOutDir = outDir || resolve(process.cwd(), "dist/client");
+  const root = resolve(__dirname, "..", "..", "src", "client");
+  const buildOutDir = outDir || resolve(__dirname, "..", "..", "build");
 
   await viteBuild({
     root,
@@ -20,6 +20,7 @@ export async function build({ outDir, watch = false }: Options): Promise<void> {
     base: pluginOptions.base,
     build: {
       outDir: buildOutDir,
+      emptyOutDir: true,
       watch: {
         include: [configFilePath],
       },
