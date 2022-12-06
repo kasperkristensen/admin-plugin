@@ -15,7 +15,6 @@ program
   .alias("b")
   .description("Builds the admin dashboard")
   .option("-o, --outDir <path>", "Output directory")
-  .option("-w, --watch", "Watch for changes")
   .action(async (options) => {
     await build(options);
   });

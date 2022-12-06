@@ -3,6 +3,7 @@ import fse from "fs-extra";
 import { ServerResponse } from "http";
 import { join, resolve } from "path";
 import { PluginOptions } from "../types";
+import { formatPath } from "../utils/build-helpers";
 
 export default function (rootDirectory: string, pluginOptions: PluginOptions) {
   const app = Router();
@@ -10,7 +11,7 @@ export default function (rootDirectory: string, pluginOptions: PluginOptions) {
   const serve = pluginOptions.serve || true;
   const serveInDev =
     pluginOptions.serveInDev && process.env.NODE_ENV === "development";
-  const path = `/${pluginOptions.base}` || "/app";
+  const path = formatPath(pluginOptions.base);
 
   if (serve || serveInDev) {
     const appPath = resolve(__dirname, "..", "build", "index.html");

@@ -1,7 +1,7 @@
 import react from "@vitejs/plugin-react";
 import { resolve } from "path";
 import { build as viteBuild } from "vite";
-import { defineBackend } from "../utils/define-backend";
+import { defineBackend } from "../utils/build-helpers";
 
 build();
 

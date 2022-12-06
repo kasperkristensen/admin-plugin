@@ -7,7 +7,7 @@
   "scripts": {
     "build:admin": "tsc -p ./tsconfig.react.json && ts-node ./src/scripts/build.ts",
     "build:lib": "tsc -p ./tsconfig.node.json",
-    "build": "yarn build:lib && yarn build:admin",
+    "build": "yarn clean && yarn build:lib && yarn build:admin",
     "dev": "ts-node ./src/scripts/develop.ts",
     "clean": "rimraf ./api ./build ./cli ./utils ./types"
   },
@@ -33,6 +33,7 @@
     "commander": "^9.4.1",
     "express": "^4.18.2",
     "fs-extra": "^11.1.0",
+    "picocolors": "^1.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   }

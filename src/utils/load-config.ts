@@ -1,6 +1,6 @@
 import { getConfigFile } from "medusa-core-utils";
 import { ConfigModule, PluginEntry, PluginOptions } from "../types";
-import { formatBase } from "./base-option";
+import { formatBase } from "./build-helpers";
 
 export function loadConfig(rootDirectory?: string): {
   pluginOptions: PluginOptions;
