@@ -1,38 +1,66 @@
-import colors from "picocolors";
-import { createLogger } from "vite";
-import { PluginOptions } from "../types";
-import { formatBase } from "./build-helpers";
+import colors from "picocolors"
+import { createLogger } from "vite"
+import { PluginOptions } from "../types"
+import { formatBase } from "./build-helpers"
 
 export const clientLogger = createLogger(undefined, {
   prefix: "[medusa-plugin-admin]",
-});
+})
 
 /**
  * Logs build result on a successful build.
  */
-export function outputBuild(pluginOptions: PluginOptions) {
+export function outputBuild(
+  pluginOptions: PluginOptions,
+  externalHost?: boolean,
+  outDir?: string
+) {
   const colorBool = (bool?: boolean) =>
-    bool ? colors.green("true") : colors.red("false");
+    bool ? colors.green("true") : colors.red("false")
 
-  const configuration = `
+  let config: string | undefined = undefined
+
+  if (externalHost) {
+    config = `
     ${colors.bold("Configuration:")}
 
     ${colors.green("➜")}  ${colors.bold(
-    "Serve"
-  )}:                   ${colorBool(pluginOptions.serve)}
+      "Serve"
+    )}:                   ${colorBool(false)}
 
     ${colors.green("➜")}  ${colors.bold(
-    "Base"
-  )}:                    ${colors.cyan(formatBase(pluginOptions.base))}
+      "Base"
+    )}:                    ${colors.cyan("/")}
 
     ${colors.green("➜")}  ${colors.bold(
-    "Backend URL"
-  )}:             ${colors.cyan(
-    pluginOptions.serve
-      ? `Serve is ${colorBool(true)}, this option is ignored`
-      : pluginOptions.backendUrl
-  )}
-  `;
+      "Backend URL:"
+    )}             ${colors.cyan(pluginOptions.backend_url)}
+
+    ${colors.green("➜")}  ${colors.bold(
+      "Output directory"
+    )}         ${colors.cyan(outDir)}
+  `
+  } else {
+    config = `
+    ${colors.bold("Configuration:")}
+
+    ${colors.green("➜")}  ${colors.bold(
+      "Serve"
+    )}:                   ${colorBool(pluginOptions.serve)}
+
+    ${colors.green("➜")}  ${colors.bold(
+      "Base"
+    )}:                    ${colors.cyan(formatBase(pluginOptions.base))}
+
+    ${colors.green("➜")}  ${colors.bold(
+      "Backend URL"
+    )}:             ${colors.cyan(
+      pluginOptions.serve
+        ? `Serve is ${colorBool(true)}, this option is ignored`
+        : pluginOptions.backend_url
+    )}
+    `
+  }
 
   clientLogger.info(
     `
@@ -40,20 +68,20 @@ export function outputBuild(pluginOptions: PluginOptions) {
       `Build completed`
     )} ${colors.green("✔")}
 
-    ${configuration}
-    `
-  );
+    ${config}
+  `
+  )
 }
 
 export function outputDevelopmentServer({
   port,
   url,
 }: {
-  port: number;
-  url: string;
+  port: number
+  url: string
 }) {
   const colorUrl = (url: string) =>
-    colors.cyan(url.replace(/:(\d+)\//, (_, port) => `:${colors.bold(port)}/`));
+    colors.cyan(url.replace(/:(\d+)\//, (_, port) => `:${colors.bold(port)}/`))
 
   clientLogger.info(
     ` 
@@ -75,7 +103,7 @@ export function outputDevelopmentServer({
     {
       clear: true,
     }
-  );
+  )
 }
 
 /**
@@ -88,5 +116,18 @@ export function logErrorMsg(msg: string) {
 
     ${colors.red("×")} ${colors.bold("Error:")}  ${colors.red(msg)}
     `
-  );
+  )
+}
+
+/**
+ * Formats and logs a warning message.
+ */
+export function logWarningMsg(msg: string) {
+  clientLogger.warn(
+    `
+    ${colors.magenta(colors.bold("[medusa-plugin-admin]"))}
+
+    ${colors.yellow("⚠")} ${colors.bold("Warning:")}  ${colors.yellow(msg)}
+    `
+  )
 }

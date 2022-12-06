@@ -1,17 +1,17 @@
-import react from "@vitejs/plugin-react";
-import { Command } from "commander";
-import dns from "dns";
-import { resolve } from "path";
-import { createServer } from "vite";
-import { defineBackend } from "../utils/build-helpers";
-import { outputDevelopmentServer } from "../utils/logger";
+import react from "@vitejs/plugin-react"
+import { Command } from "commander"
+import dns from "dns"
+import { resolve } from "path"
+import { createServer } from "vite"
+import { defineBackend } from "../utils/build-helpers"
+import { outputDevelopmentServer } from "../utils/logger"
 
 type DevConfig = {
-  port?: number;
-  url?: string;
-};
+  port?: number
+  url?: string
+}
 
-dns.setDefaultResultOrder("verbatim");
+dns.setDefaultResultOrder("verbatim")
 
 /**
  * Internal script used to start a development server for the admin dashboard.
@@ -38,18 +38,18 @@ async function develop({
     },
     plugins: [react()],
     define: defineBackend({ serve: false, backendUrl: url }),
-  });
+  })
 
-  await server.listen();
+  await server.listen()
 
-  outputDevelopmentServer({ port, url });
+  outputDevelopmentServer({ port, url })
 }
 
-const program = new Command();
+const program = new Command()
 
 program
   .option("-p, --port <port>", "Port on localhost")
   .option("-u, --url <url>")
-  .action(develop);
+  .action(develop)
 
-program.parse();
+program.parse()

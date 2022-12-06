@@ -1,5 +1,5 @@
-import { DefineBackendConfig } from "../types";
-import { logErrorMsg } from "./logger";
+import { DefineBackendConfig } from "../types"
+import { logErrorMsg, logWarningMsg } from "./logger"
 
 /**
  * Formats the base path to be used in the admin dashboard.
@@ -8,22 +8,22 @@ import { logErrorMsg } from "./logger";
  */
 export function formatBase(base?: string) {
   if (!base) {
-    return "/app/";
+    return "/app/"
   }
 
   if (base.startsWith("/") && base.endsWith("/")) {
-    return base;
+    return base
   }
 
   if (base.startsWith("/") && !base.endsWith("/")) {
-    return `${base}/`;
+    return `${base}/`
   }
 
   if (!base.startsWith("/") && base.endsWith("/")) {
-    return `/${base}`;
+    return `/${base}`
   }
 
-  return `/${base}/`;
+  return `/${base}/`
 }
 
 /**
@@ -33,22 +33,22 @@ export function formatBase(base?: string) {
  */
 export function formatPath(base?: string) {
   if (!base) {
-    return "/app";
+    return "/app"
   }
 
   if (base.startsWith("/") && !base.endsWith("/")) {
-    return base;
+    return base
   }
 
   if (!base.startsWith("/") && !base.endsWith("/")) {
-    return `/${base}`;
+    return `/${base}`
   }
 
   if (base.startsWith("/") && base.endsWith("/")) {
-    return base.slice(0, -1);
+    return base.slice(0, -1)
   }
 
-  return `/${base}`;
+  return `/${base}`
 }
 
 /**
@@ -57,27 +57,59 @@ export function formatPath(base?: string) {
  */
 export function validateBase(base?: string): void {
   if (!base) {
-    return;
+    return
   }
 
-  let errorMsg: string | undefined = undefined;
+  let errorMsg: string | undefined = undefined
 
   if (base === "admin") {
-    errorMsg = `The base path "/${base}" is reserved for the admin API. Please choose another base path.`;
+    errorMsg = `The path "/${base}" is reserved for the admin API.`
   }
 
   if (base === "store") {
-    errorMsg = `The base path "/${base}" is reserved for the store API. Please choose another base path.`;
+    errorMsg = `The path "/${base}" is reserved for the store API.`
   }
 
   if (base === "" || base === "/") {
-    errorMsg = `The base path "/" is reserved for the store API. Please choose another base path.`;
+    errorMsg = `The path "/" is reserved for the store API.`
   }
 
   if (errorMsg) {
-    logErrorMsg(errorMsg);
+    logErrorMsg(errorMsg + " Update 'base' in 'medusa-config.js' to continue.")
 
-    process.exit(1);
+    process.exit(1)
+  }
+}
+
+/**
+ * Validates that the uses provided a valid server URL, when building for hosting the dashboard separately from the Medusa backend.
+ */
+export function validateURL(url?: string) {
+  let errorMsg: string | undefined = undefined
+  let warningMsg: string | undefined = undefined
+
+  if (!url) {
+    errorMsg = "No 'backend_url' was provided."
+  } else {
+    try {
+      const temp = new URL(url)
+
+      if (temp.protocol !== "https:") {
+        warningMsg = `The provided 'backend_url' does not use HTTPS.`
+      }
+    } catch (err) {
+      errorMsg = `The provided 'backend_url' "${url}" is not a valid URL.`
+    }
+  }
+
+  if (errorMsg) {
+    logErrorMsg(errorMsg)
+
+    process.exit(1)
+  }
+
+  if (warningMsg) {
+    logWarningMsg(warningMsg)
   }
 }
 
@@ -93,5 +125,5 @@ export const defineBackend = ({
 }: DefineBackendConfig) => {
   return {
     ___MEDUSA_BACKEND_URL___: JSON.stringify(serve ? "/" : backendUrl),
-  };
-};
+  }
+}

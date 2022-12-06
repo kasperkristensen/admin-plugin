@@ -1,9 +1,9 @@
-import react from "@vitejs/plugin-react";
-import { resolve } from "path";
-import { build as viteBuild } from "vite";
-import { defineBackend } from "../utils/build-helpers";
+import react from "@vitejs/plugin-react"
+import { resolve } from "path"
+import { build as viteBuild } from "vite"
+import { defineBackend } from "../utils/build-helpers"
 
-build();
+build()
 
 /**
  * Internal script used to build the default admin dashboard, that is shipped pre-built
@@ -23,5 +23,5 @@ async function build() {
       outDir: resolve(__dirname, "..", "..", "build"),
       emptyOutDir: true,
     },
-  });
+  })
 }

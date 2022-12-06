@@ -1,24 +1,24 @@
 export type PluginOptions = {
-  base?: string;
-  serve?: boolean;
-  serveInDev?: boolean;
-  backendUrl?: string;
-};
+  base?: string
+  serve?: boolean
+  serve_dev?: boolean
+  backend_url?: string
+}
 
-type PluginName = string;
+type PluginName = string
 
 export type PluginEntry =
   | PluginName
   | {
-      resolve: PluginName;
-      options?: PluginOptions;
-    };
+      resolve: PluginName
+      options?: PluginOptions
+    }
 
 export type ConfigModule = {
-  plugins: PluginEntry[];
-};
+  plugins: PluginEntry[]
+}
 
 export type DefineBackendConfig = {
-  serve?: boolean;
-  backendUrl?: string;
-};
+  serve?: boolean
+  backendUrl?: string
+}

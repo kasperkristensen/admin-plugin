@@ -1,14 +1,14 @@
 #! /usr/bin/env node
 
-import { Command } from "commander";
-import { build } from "./commands/build";
+import { Command } from "commander"
+import { build } from "./commands/build"
 
-const program = new Command();
+const program = new Command()
 
 program
   .name("medusa-admin-cli")
   .description("Medusa Admin CLI")
-  .version("0.0.1");
+  .version("0.0.1")
 
 program
   .command("build")
@@ -16,7 +16,7 @@ program
   .description("Builds the admin dashboard")
   .option("-o, --outDir <path>", "Output directory")
   .action(async (options) => {
-    await build(options);
-  });
+    await build(options)
+  })
 
-program.parse();
+program.parse()
