@@ -1,5 +1,7 @@
 # Medusa Admin Plugin
 
+> TEMPORARY README
+
 ### **Building the plugin**
 
 1. Clone the repo
@@ -28,7 +30,7 @@ plugins: [
     resolve: "medusa-plugin-admin",
     options: {
       serve: true,
-      base: "/app/", // Can be anything you want except for the reserved paths '/admin', '/store', '/'.
+      base: "/app/", // Can be anything you want except for the reserved paths '/admin', '/store', '/'. Can be omitted, and will then default to '/app/'.
     },
   },
 ]
@@ -50,4 +52,4 @@ plugins: [
 
 2. Run `yarn build:admin` to build the React application
 
-If you want to host the React application separately from the backend, you can run `medusa-admin-cli build -o <path>` to build the application to your desired path. This requires that you have provided a `backend_url` in the plugin options, as this will be injected into the build and used as a source of truth for setting up `medusa-react` in the application. If you do not provide a backend url, the build will fail gracefully and inform the user what is required. If -o is used all plugin options except for `backend_url` will be ignored.
+If you want to host the React application separately from the backend, you can run `medusa-admin-cli build -o <path>` to build the application to your desired path. This requires that you have provided a `backend_url` in the plugin options, as this will be injected into the build and used as a source of truth for setting up `medusa-react` in the application. If you do not provide a backend url, the build will fail gracefully and inform the user what is required. If -o is used all plugin options except for `backend_url` will be ignored, though you should still set `serve: false` in the options to prevent the server from serving the application.
