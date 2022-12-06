@@ -5,7 +5,7 @@ import { join, resolve } from "path"
 import { PluginOptions } from "../types"
 import { formatPath } from "../utils/build-helpers"
 
-export default function (rootDirectory: string, pluginOptions: PluginOptions) {
+export default function (_rootDirectory: string, pluginOptions: PluginOptions) {
   const app = Router()
 
   const serve = pluginOptions.serve || true
