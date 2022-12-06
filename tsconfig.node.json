@@ -13,5 +13,5 @@
     "baseUrl": "./"
   },
   "include": ["vite.config.ts", "src"],
-  "exclude": ["src/client"]
+  "exclude": ["src/client", "src/scripts"]
 }

@@ -1,13 +1,27 @@
+#! /usr/bin/env node
+
 import react from "@vitejs/plugin-react";
+import { Command } from "commander";
+import dns from "dns";
 import { resolve } from "path";
-import { env } from "process";
 import { createServer } from "vite";
 import { defineBackend } from "../utils/define-backend";
 
-const BACKEND_URL = env.BACKEND_URL || undefined;
-const DEV_PORT = env.DEV_PORT ? parseInt(env.DEV_PORT) : 7000;
+dns.setDefaultResultOrder("verbatim");
 
-develop();
+const program = new Command();
+
+program
+  .option("-p, --port <port>", "Port on localhost")
+  .option("-a, --api <api>")
+  .action(develop);
+
+program.parse();
+
+type DevConfig = {
+  port?: number;
+  api?: string;
+};
 
 /**
  * Internal script used to start a development server for the admin dashboard.
@@ -20,17 +34,20 @@ develop();
  *
  * To start the server, run `yarn dev` from your terminal.
  */
-async function develop() {
+async function develop({
+  port = 7000,
+  api = "http://localhost:9000",
+}: DevConfig) {
   const server = await createServer({
     root: resolve(__dirname, "../", "client"),
     server: {
       host: "localhost",
-      port: DEV_PORT,
+      port: port,
       hmr: true,
       open: true,
     },
     plugins: [react()],
-    define: defineBackend({ serve: false, backendUrl: BACKEND_URL }),
+    define: defineBackend({ serve: false, backendUrl: api }),
   });
 
   await server.listen();
